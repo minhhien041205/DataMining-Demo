@@ -124,7 +124,9 @@ def _show_student(ds):
         input_header("Dữ Liệu Gốc (có giá trị thiếu)")
         st.dataframe(df_raw.style.highlight_null(color="#FCA5A5"), use_container_width=True)
         missing = df_raw[numeric_cols].isna().sum()
-        result_box(f"Giá trị thiếu: {dict(missing[missing > 0])}")
+        missing_counts = {col: int(count) for col, count in missing.items() if count > 0}
+        missing_text = ", ".join(f"{col}: {count}" for col, count in missing_counts.items())
+        result_box(f"Giá trị thiếu: {missing_text}")
 
     with st.container(border=True):
         step(1, "Xử Lý Giá Trị Thiếu")
